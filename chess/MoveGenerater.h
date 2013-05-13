@@ -1,6 +1,6 @@
-#pragma once
+ï»¿#pragma once
 /************************************************************************/
-/* Õâ¸öÎÄ¼şÖ÷ÒªÊÇÉú³ÉÏóÆåµÄ×ß·¨£¬²é¿´Ä³ÖÖ×ß·¨ÊÇ·ñºÏ·¨¡£                          */
+/* è¿™ä¸ªæ–‡ä»¶ä¸»è¦æ˜¯ç”Ÿæˆè±¡æ£‹çš„èµ°æ³•ï¼ŒæŸ¥çœ‹æŸç§èµ°æ³•æ˜¯å¦åˆæ³•ã€‚                          */
 /************************************************************************/
 
 
@@ -23,36 +23,36 @@ public:
 	int AllValidMove(int Map[10][9],int ply,int size);
 	vector<vector<MoveStep> > MoveList;
 protected:
-	//½«²úÉúµÄ×ß·¨²åÈëµ½M_MoveListÖĞÈ¥£¡£¡£¡£¡£¡£¡£¡£¡£¡£¡
+	//å°†äº§ç”Ÿçš„èµ°æ³•æ’å…¥åˆ°M_MoveListä¸­å»ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼
 	int AddMove(CPoint from , CPoint to , int ply);
-	//ÏÂÃæ¹æ¶¨ËùÓĞÆå×ÓµÄ×ß·¨£¡£¡£¡£¡
-	//½«
+	//ä¸‹é¢è§„å®šæ‰€æœ‰æ£‹å­çš„èµ°æ³•ï¼ï¼ï¼ï¼
+	//å°†
 	void GNT_JiangMove(int Map[10][9] ,CPoint pos , int ply);
-	//Ë§
+	//å¸…
 	void GNT_ShuaiMove(int Map[10][9] , CPoint pos , int ply);
-	//ºìÏà
+	//çº¢ç›¸
 	void GNT_RXiangMove(int Map[10][9] , CPoint pos , int ply);
-	//ºÚÏó
+	//é»‘è±¡
 	void GNT_BXiangMove(int Map[10][9] , CPoint pos , int ply);
-	//ºìÊ¿
+	//çº¢å£«
 	void GNT_RShiMove(int Map[10][9] , CPoint pos , int ply);
-	//ºÚÊ¿
+	//é»‘å£«
 	void GNT_BShiMove(int Map[10][9] , CPoint pos , int ply);
-	//ºìÂí
+	//çº¢é©¬
 	void GNT_RMaMove(int Map[10][9] , CPoint pos , int ply);
-	//ºÚÂí
+	//é»‘é©¬
 	void GNT_BMaMove(int Map[10][9] , CPoint pos , int ply);
-	//ºìÜ‡
+	//çº¢è»Š
 	void GNT_RJuMove(int Map[10][9] , CPoint pos , int ply);
-	//ºÚÜ‡
+	//é»‘è»Š
 	void GNT_BJuMove(int Map[10][9] , CPoint pos , int ply);
-	//ºì±ø
+	//çº¢å…µ
 	void GNT_RBingMove(int Map[10][9] ,CPoint pos , int ply);
-	//ºÚ×ä
+	//é»‘å’
 	void GNT_BZuMove(int Map[10][9] , CPoint pos , int ply);
-	//ºìÅÚ
+	//çº¢ç‚®
 	void GNT_RPaoMove(int Map[10][9] , CPoint pos , int ply);
-	//ºÚÅÚ
+	//é»‘ç‚®
 	void GNT_BPaoMove(int Map[10][9] , CPoint pos , int ply);
 	int m_nMoveCount;
 };

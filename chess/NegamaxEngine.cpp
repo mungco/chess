@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+﻿#include "StdAfx.h"
 #include "NegamaxEngine.h"
 
 
@@ -29,7 +29,7 @@ int CNegamaxEngine::NegaMax(int depth)
 	int Count,i;
 	BYTE type;
 
-	if (depth <= 0)	//Ҷ�ӽڵ�ȡ��ֵ
+	if (depth <= 0)	//叶子节点取估值
 		return m_pEval->Evaluate(CurMap, (m_nMaxDepth-depth)%2);
 
 	Count = m_pMG->AllValidMove(CurMap, depth, (m_nMaxDepth-depth)%2);

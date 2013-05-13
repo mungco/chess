@@ -1,5 +1,5 @@
-
-// chessDlg.h : Í·ÎÄ¼ş
+ï»¿
+// chessDlg.h : å¤´æ–‡ä»¶
 //
 
 #pragma once
@@ -7,14 +7,14 @@
 #include "MoveGenerater.h"
 #include "SearchEngine.h"
 #include "Evaluation.h"
-// CchessDlg ¶Ô»°¿ò
+// CchessDlg å¯¹è¯æ¡†
 class CchessDlg : public CDialogEx
 {
-// ¹¹Ôì
+// æ„é€ 
 public:
-	CchessDlg(CWnd* pParent = NULL);	// ±ê×¼¹¹Ôìº¯Êı
+	CchessDlg(CWnd* pParent = NULL);	// æ ‡å‡†æ„é€ å‡½æ•°
 
-// ¶Ô»°¿òÊı¾İ
+// å¯¹è¯æ¡†æ•°æ®
 	enum { IDD = IDD_CHESS_DIALOG };
 	struct ChessNode{
 		CPoint pos;
@@ -23,10 +23,10 @@ public:
 		bool operator!=(const ChessNode& n){if(n.pos==this->pos && n.ChessID==this->ChessID)return false;return true;}
 	};
 	protected:
-	virtual void DoDataExchange(CDataExchange* pDX);	// DDX/DDV Ö§³Ö
+	virtual void DoDataExchange(CDataExchange* pDX);	// DDX/DDV æ”¯æŒ
 
 
-// ÊµÏÖ
+// å®ç°
 protected:
 	HICON m_hIcon;
 	int m_ChessBoard[10][9];
@@ -39,7 +39,7 @@ protected:
 	CSearchEngine *m_pSE;
 	CMoveGenerater *m_pMG;
 	CEvaluation *m_pEva;
-	// Éú³ÉµÄÏûÏ¢Ó³Éäº¯Êı
+	// ç”Ÿæˆçš„æ¶ˆæ¯æ˜ å°„å‡½æ•°
 	virtual BOOL OnInitDialog();
 	afx_msg void OnSysCommand(UINT nID, LPARAM lParam);
 	afx_msg void OnPaint();

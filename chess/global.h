@@ -1,25 +1,25 @@
-#pragma once
+ï»¿#pragma once
 
 
-#define NOCHESS 0    //Ã»ÓĞÆå×Ó
+#define NOCHESS 0    //æ²¡æœ‰æ£‹å­
 
-#define B_KING       1  //ºÚË§
-#define B_CAR        2  //ºÚ³µ
-#define B_HORSE      3  //ºÚÂí
-#define B_CANON      4  //ºÚÅÚ
-#define B_BISHOP     5  //ºÚÊ¿
-#define B_ELEPHANT   6  //ºÚÏó
-#define B_PAWN       7  //ºÚ×ä
+#define B_KING       1  //é»‘å¸…
+#define B_CAR        2  //é»‘è½¦
+#define B_HORSE      3  //é»‘é©¬
+#define B_CANON      4  //é»‘ç‚®
+#define B_BISHOP     5  //é»‘å£«
+#define B_ELEPHANT   6  //é»‘è±¡
+#define B_PAWN       7  //é»‘å’
 #define B_BEGIN      B_KING
 #define B_END        B_PAWN
 
-#define R_KING       8   //ºìË§
-#define R_CAR        9   //ºì³µ
-#define R_HORSE      10  //ºìÂí
-#define R_CANON      11  //ºìÅÚ
-#define R_BISHOP     12  //ºìÊ¿
-#define R_ELEPHANT   13  //ºìÏó
-#define R_PAWN       14  //ºì±ø
+#define R_KING       8   //çº¢å¸…
+#define R_CAR        9   //çº¢è½¦
+#define R_HORSE      10  //çº¢é©¬
+#define R_CANON      11  //çº¢ç‚®
+#define R_BISHOP     12  //çº¢å£«
+#define R_ELEPHANT   13  //çº¢è±¡
+#define R_PAWN       14  //çº¢å…µ
 #define R_BEGIN      R_KING
 #define R_END        R_PAWN
 

@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "searchengine.h"
 
 class CNegamaxEngine : 	public CSearchEngine

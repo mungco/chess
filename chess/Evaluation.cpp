@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+ï»¿#include "StdAfx.h"
 #include "Evaluation.h"
 
 
@@ -84,7 +84,7 @@ bool CEvaluation::CanTouch(int Map[10][9],CPoint from,CPoint to)
 	int nMoveChessID, nTargetID;
 
 	if (from==to)
-		return FALSE;//Ä¿µÄÓëÔ´ÏàÍ¬
+		return FALSE;//ç›®çš„ä¸æºç›¸åŒ
 
 	nMoveChessID = Map[from.x][from.y];
 	nTargetID = Map[to.x][to.y];
@@ -101,96 +101,96 @@ bool CEvaluation::CanTouch(int Map[10][9],CPoint from,CPoint to)
 		}
 		else {
 			if (to.x > 2 || to.y > 5 || to.y < 3 || to.x<0)
-				return FALSE;//Ä¿±êµãÔÚ¾Å¹¬Ö®Íâ
+				return FALSE;//ç›®æ ‡ç‚¹åœ¨ä¹å®«ä¹‹å¤–
 			if(abs(from.x - to.x) + abs(from.y - to.y) > 1) 
-				return FALSE;//½«Ë§Ö»×ßÒ»²½Ö±Ïß
+				return FALSE;//å°†å¸…åªèµ°ä¸€æ­¥ç›´çº¿
 		}
 		break;
 	case R_BISHOP:   
 
 		if (to.x < 7 || to.y > 5 || to.y < 3 || to.x>9)
-			return FALSE;//Ê¿³ö¾Å¹¬	
+			return FALSE;//å£«å‡ºä¹å®«	
 
 		if (abs(from.x - to.x) != 1 || abs(from.y-to.y) != 1)
-			return FALSE;	//Ê¿×ßĞ±Ïß
+			return FALSE;	//å£«èµ°æ–œçº¿
 		break;
 
-	case B_BISHOP:   //ºÚÊ¿
+	case B_BISHOP:   //é»‘å£«
 
 		if (to.x > 2 || to.y > 5 || to.y < 3 || to.x<0)
-			return FALSE;//Ê¿³ö¾Å¹¬	
+			return FALSE;//å£«å‡ºä¹å®«	
 
 		if (abs(from.x - to.x) != 1 || abs(from.y-to.y) != 1)
-			return FALSE;	//Ê¿×ßĞ±Ïß
+			return FALSE;	//å£«èµ°æ–œçº¿
 
 		break;
 
-	case R_ELEPHANT://ºìÏó
+	case R_ELEPHANT://çº¢è±¡
 
 		if(to.x < 5)
-			return FALSE;//Ïà²»ÄÜ¹ıºÓ
+			return FALSE;//ç›¸ä¸èƒ½è¿‡æ²³
 
 		if(abs(from.y-to.y) != 2 || abs(from.x - to.x) != 2)
-			return FALSE;//Ïà×ßÌï×Ö
+			return FALSE;//ç›¸èµ°ç”°å­—
 
 		if(Map[(from.y+to.y) / 2][(from.x + to.x) / 2] != NOCHESS)
-			return FALSE;//ÏàÑÛ±»Èû×¡ÁË
+			return FALSE;//ç›¸çœ¼è¢«å¡ä½äº†
 
 		break;
 
-	case B_ELEPHANT://ºÚÏó 
+	case B_ELEPHANT://é»‘è±¡ 
 
 		if(to.x > 4)
-			return FALSE;//Ïà²»ÄÜ¹ıºÓ
+			return FALSE;//ç›¸ä¸èƒ½è¿‡æ²³
 
 		if(abs(from.y-to.y) != 2 || abs(from.x - to.x) != 2)
-			return FALSE;//Ïà×ßÌï×Ö
+			return FALSE;//ç›¸èµ°ç”°å­—
 
 		if(Map[(from.y+to.y) / 2][(from.x + to.x) / 2] != NOCHESS)
-			return FALSE;//ÏàÑÛ±»Èû×¡ÁË
+			return FALSE;//ç›¸çœ¼è¢«å¡ä½äº†
 
 		break;
 
-	case B_PAWN:     //ºÚ±ø
+	case B_PAWN:     //é»‘å…µ
 
 		if(to.x < from.x)
-			return FALSE;//±ø²»»ØÍ·
+			return FALSE;//å…µä¸å›å¤´
 
 		if( from.x < 5 && from.x == to.x)
-			return FALSE;//±ø¹ıºÓÇ°Ö»ÄÜÖ±×ß
+			return FALSE;//å…µè¿‡æ²³å‰åªèƒ½ç›´èµ°
 
 		if(abs(from.y-to.y) +to.x - from.x > 1)
-			return FALSE;//±øÖ»×ßÒ»²½Ö±Ïß:
+			return FALSE;//å…µåªèµ°ä¸€æ­¥ç›´çº¿:
 
 		break;
 
-	case R_PAWN:    //ºì±ø
+	case R_PAWN:    //çº¢å…µ
 
 		if(to.x > from.x)
-			return FALSE;//±ø²»»ØÍ·
+			return FALSE;//å…µä¸å›å¤´
 
 		if( from.x > 4 && from.x == to.x)
-			return FALSE;//±ø¹ıºÓÇ°Ö»ÄÜÖ±×ß
+			return FALSE;//å…µè¿‡æ²³å‰åªèƒ½ç›´èµ°
 
 		if(abs(from.y-to.y) + from.x - to.x > 1)
-			return FALSE;//±øÖ»×ßÒ»²½Ö±Ïß:
+			return FALSE;//å…µåªèµ°ä¸€æ­¥ç›´çº¿:
 
 		break;
 
 	case R_KING:     
 		if (nTargetID == B_KING) {
 			if (from.y != to.y)
-				return FALSE;//Á½¸ö½«²»ÔÚÍ¬Ò»ÁĞ
+				return FALSE;//ä¸¤ä¸ªå°†ä¸åœ¨åŒä¸€åˆ—
 			for (i = from.x - 1; i > to.x; i--)
 				if (Map[i][from.y] != NOCHESS)
-					return FALSE;//ÖĞ¼äÓĞ±ğµÄ×Ó
+					return FALSE;//ä¸­é—´æœ‰åˆ«çš„å­
 		}
 		else
 		{
 			if (to.x < 7 || to.y > 5 || to.y < 3)
-				return FALSE;//Ä¿±êµãÔÚ¾Å¹¬Ö®Íâ
+				return FALSE;//ç›®æ ‡ç‚¹åœ¨ä¹å®«ä¹‹å¤–
 			if(abs(from.y-to.y) + abs(from.x - to.x) > 1) 
-				return FALSE;//½«Ë§Ö»×ßÒ»²½Ö±Ïß:
+				return FALSE;//å°†å¸…åªèµ°ä¸€æ­¥ç›´çº¿:
 		}
 		break;
 
@@ -198,7 +198,7 @@ bool CEvaluation::CanTouch(int Map[10][9],CPoint from,CPoint to)
 	case R_CAR:      
 
 		if(from.x != to.x && from.y != to.y)
-			return FALSE;	//³µ×ßÖ±Ïß:
+			return FALSE;	//è½¦èµ°ç›´çº¿:
 
 		if(from.x == to.x)	{
 			if(from.y < to.y) {
@@ -231,7 +231,7 @@ bool CEvaluation::CanTouch(int Map[10][9],CPoint from,CPoint to)
 
 		if(!((abs(to.y-from.y)==1 && abs(to.x-from.x)==2)
 			||(abs(to.y-from.y)==2&&abs(to.x-from.x)==1)))
-			return FALSE;//Âí×ßÈÕ×Ö
+			return FALSE;//é©¬èµ°æ—¥å­—
 
 		if	(to.y-from.y==2) {
 			i=from.y+1;
@@ -251,16 +251,16 @@ bool CEvaluation::CanTouch(int Map[10][9],CPoint from,CPoint to)
 		}
 
 		if(Map[i][j] != NOCHESS)
-			return FALSE;//°íÂíÍÈ
+			return FALSE;//ç»Šé©¬è…¿
 
 		break;
 	case B_CANON:    
 	case R_CANON:    
 
 		if(from.x!=to.x && from.y!=to.y)
-			return FALSE;	//ÅÚ×ßÖ±Ïß:
+			return FALSE;	//ç‚®èµ°ç›´çº¿:
 
-		//ÅÚcantouchµ½µÄ²¢²»Ò»¶¨ÄÜ³Ô×Ó
+		//ç‚®cantouchåˆ°çš„å¹¶ä¸ä¸€å®šèƒ½åƒå­
 
 		if(Map[to.x][to.y] == NOCHESS)
 		{
@@ -289,8 +289,8 @@ bool CEvaluation::CanTouch(int Map[10][9],CPoint from,CPoint to)
 				}
 			}
 		}
-		//ÒÔÉÏÊÇÅÚ²»³Ô×Ó-------------------------------------
-		//³Ô×ÓÊ±:=======================================
+		//ä»¥ä¸Šæ˜¯ç‚®ä¸åƒå­-------------------------------------
+		//åƒå­æ—¶:=======================================
 		else {
 			int nCount=0;
 			if(from.x == to.x) {
@@ -660,7 +660,7 @@ int CEvaluation::Evaluate(int Map[10][9],bool bIsRedTurn)
 					}//for
 				}//if
 			}//for
-	for(i = 0; i < 10; i++){//¸ù¾İÃ¿¸öÆå×ÓµÄÁé»îĞÔ¼ÆËã³öµÄÆå×ÓµÄ¼ÛÖµ
+	for(i = 0; i < 10; i++){//æ ¹æ®æ¯ä¸ªæ£‹å­çš„çµæ´»æ€§è®¡ç®—å‡ºçš„æ£‹å­çš„ä»·å€¼
 		for(j = 0; j < 9; j++) {
 			if(Map[i][j] != NOCHESS) {
 				nChessType = Map[i][j];

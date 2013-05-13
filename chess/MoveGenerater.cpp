@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+ï»¿#include "StdAfx.h"
 #include "MoveGenerater.h"
 #include "global.h"
 
@@ -25,18 +25,18 @@ bool CMoveGenerater::IsValidMove(int Map[10][9] , CPoint from, CPoint to ){
 	int nMoveChessID, nTargetID;
 
 	if (from == to)
-		return false;//Ä¿µÄÓëÔ´ÏàÍ¬
+		return false;//ç›®çš„ä¸æºç›¸åŒ
 
 	nMoveChessID = Map[from.x][from.y];
 	nTargetID = Map[to.x][to.y];
 
 	if (IsSameSide(nMoveChessID, nTargetID))
-		return false;//²»ÄÜ³Ô×Ô¼ºµÄÆå
+		return false;//ä¸èƒ½åƒè‡ªå·±çš„æ£‹
 
 	switch(nMoveChessID)
 	{
 	case B_KING:     
-		if (nTargetID == R_KING)//ÀÏ½«Ò²ÊÇ¿ÉÒÔMoveµÄ
+		if (nTargetID == R_KING)//è€å°†ä¹Ÿæ˜¯å¯ä»¥Moveçš„
 		{
 			if (from.y != to.y)
 				return FALSE;
@@ -47,98 +47,98 @@ bool CMoveGenerater::IsValidMove(int Map[10][9] , CPoint from, CPoint to ){
 		else
 		{
 			if (to.x > 2 || to.y > 5 || to.y < 3)
-				return FALSE;//Ä¿±êµãÔÚ¾Å¹¬Ö®Íâ
+				return FALSE;//ç›®æ ‡ç‚¹åœ¨ä¹å®«ä¹‹å¤–
 			if(abs(from.x - to.x) + abs(to.y - from.y) > 1) 
-				return FALSE;//½«Ë§Ö»×ßÒ»²½Ö±Ïß:
+				return FALSE;//å°†å¸…åªèµ°ä¸€æ­¥ç›´çº¿:
 		}
 		break;
 	case R_BISHOP:   
 
 		if (to.x < 7 || to.y > 5 || to.y < 3)
-			return FALSE;//Ê¿³ö¾Å¹¬	
+			return FALSE;//å£«å‡ºä¹å®«	
 
 		if (abs(from.x - to.x) != 1 || abs(to.y - from.y) != 1)
-			return FALSE;	//Ê¿×ßĞ±Ïß
+			return FALSE;	//å£«èµ°æ–œçº¿
 
 		break;
 
-	case B_BISHOP:   //ºÚÊ¿
+	case B_BISHOP:   //é»‘å£«
 
 		if (to.x > 2 || to.y > 5 || to.y < 3)
-			return FALSE;//Ê¿³ö¾Å¹¬	
+			return FALSE;//å£«å‡ºä¹å®«	
 
 		if (abs(from.x - to.x) != 1 || abs(to.y - from.y) != 1)
-			return FALSE;	//Ê¿×ßĞ±Ïß
+			return FALSE;	//å£«èµ°æ–œçº¿
 
 		break;
 
-	case R_ELEPHANT://ºìÏó
+	case R_ELEPHANT://çº¢è±¡
 
 		if(to.x < 5)
-			return FALSE;//Ïà²»ÄÜ¹ıºÓ
+			return FALSE;//ç›¸ä¸èƒ½è¿‡æ²³
 
 		if(abs(from.y-to.y) != 2 || abs(from.x-to.x) != 2)
-			return FALSE;//Ïà×ßÌï×Ö
+			return FALSE;//ç›¸èµ°ç”°å­—
 
 		if(Map[(from.x + to.x) / 2][(from.y + to.y) / 2] != NOCHESS)
-			return FALSE;//ÏàÑÛ±»Èû×¡ÁË
+			return FALSE;//ç›¸çœ¼è¢«å¡ä½äº†
 
 		break;
 
-	case B_ELEPHANT://ºÚÏó 
+	case B_ELEPHANT://é»‘è±¡ 
 
 		if(to.x > 4)
-			return FALSE;//Ïà²»ÄÜ¹ıºÓ
+			return FALSE;//ç›¸ä¸èƒ½è¿‡æ²³
 
 		if(abs(from.y-to.y) != 2 || abs(from.x-to.x) != 2)
-			return FALSE;//Ïà×ßÌï×Ö
+			return FALSE;//ç›¸èµ°ç”°å­—
 
 		if(Map[(from.x + to.x) / 2][(from.y + to.y) / 2] != NOCHESS)
-			return FALSE;//ÏàÑÛ±»Èû×¡ÁË
+			return FALSE;//ç›¸çœ¼è¢«å¡ä½äº†
 
 		break;
 
-	case B_PAWN:     //ºÚ±ø
+	case B_PAWN:     //é»‘å…µ
 
 		if(to.x < from.x)
-			return FALSE;//±ø²»»ØÍ·
+			return FALSE;//å…µä¸å›å¤´
 
 		if( from.x < 5 && from.x == to.x)
-			return FALSE;//±ø¹ıºÓÇ°Ö»ÄÜÖ±×ß
+			return FALSE;//å…µè¿‡æ²³å‰åªèƒ½ç›´èµ°
 
 		if(to.x - from.x + abs(to.y - from.y) > 1)
-			return FALSE;//±øÖ»×ßÒ»²½Ö±Ïß:
+			return FALSE;//å…µåªèµ°ä¸€æ­¥ç›´çº¿:
 
 		break;
 
-	case R_PAWN:    //ºì±ø
+	case R_PAWN:    //çº¢å…µ
 
 		if(to.x > from.x)
-			return FALSE;//±ø²»»ØÍ·
+			return FALSE;//å…µä¸å›å¤´
 
 		if( from.x > 4 && from.x == to.x)
-			return FALSE;//±ø¹ıºÓÇ°Ö»ÄÜÖ±×ß
+			return FALSE;//å…µè¿‡æ²³å‰åªèƒ½ç›´èµ°
 
 		if(from.x - to.x + abs(to.y - from.y) > 1)
-			return FALSE;//±øÖ»×ßÒ»²½Ö±Ïß:
+			return FALSE;//å…µåªèµ°ä¸€æ­¥ç›´çº¿:
 
 		break;
 
 	case R_KING:     
-		if (nTargetID == B_KING)//ÀÏ½«¼ûÃæ?
+		if (nTargetID == B_KING)//è€å°†è§é¢?
 		{
 			if (from.y != to.y)
-				return FALSE;//Á½¸ö½«²»ÔÚÍ¬Ò»ÁĞ
+				return FALSE;//ä¸¤ä¸ªå°†ä¸åœ¨åŒä¸€åˆ—
 			for (i = from.x - 1; i > to.x; i--)
 				if (Map[i][from.y] != NOCHESS)
-					return FALSE;//ÖĞ¼äÓĞ±ğµÄ×Ó
+					return FALSE;//ä¸­é—´æœ‰åˆ«çš„å­
 		}
 		else
 		{
 			if (to.x < 7 || to.y > 5 || to.y < 3)
-				return FALSE;//Ä¿±êµãÔÚ¾Å¹¬Ö®Íâ
+				return FALSE;//ç›®æ ‡ç‚¹åœ¨ä¹å®«ä¹‹å¤–
 			if(abs(from.x - to.x) + abs(to.y - from.y) > 1) 
-				return FALSE;//½«Ë§Ö»×ßÒ»²½Ö±Ïß:
+				return FALSE;//å°†å¸…åªèµ°ä¸€æ­¥ç›´çº¿:
 		}
 		break;
 
@@ -146,7 +146,7 @@ bool CMoveGenerater::IsValidMove(int Map[10][9] , CPoint from, CPoint to ){
 	case R_CAR:      
 
 		if(from.x != to.x && from.y != to.y)
-			return FALSE;	//³µ×ßÖ±Ïß:
+			return FALSE;	//è½¦èµ°ç›´çº¿:
 
 		if(from.x == to.x) {
 			if(from.y < to.y){
@@ -203,7 +203,7 @@ bool CMoveGenerater::IsValidMove(int Map[10][9] , CPoint from, CPoint to ){
 		}
 
 		if(Map[i][j] != NOCHESS)
-			return FALSE;//°íÂíÍÈ
+			return FALSE;//ç»Šé©¬è…¿
 
 		break;
 
@@ -211,9 +211,9 @@ bool CMoveGenerater::IsValidMove(int Map[10][9] , CPoint from, CPoint to ){
 	case R_CANON:    
 
 		if(from.x!=to.x && from.y!=to.y)
-			return FALSE;	//ÅÚ×ßÖ±Ïß:
+			return FALSE;	//ç‚®èµ°ç›´çº¿:
 
-		//ÅÚ²»³Ô×ÓÊ±¾­¹ıµÄÂ·ÏßÖĞ²»ÄÜÓĞÆå×Ó
+		//ç‚®ä¸åƒå­æ—¶ç»è¿‡çš„è·¯çº¿ä¸­ä¸èƒ½æœ‰æ£‹å­
 
 		if(Map[to.x][to.y] == NOCHESS)
 		{
@@ -248,7 +248,7 @@ bool CMoveGenerater::IsValidMove(int Map[10][9] , CPoint from, CPoint to ){
 				}
 			}
 		}
-		//ÅÚ³Ô×ÓÊ±
+		//ç‚®åƒå­æ—¶
 		else	
 		{
 			int count=0;
@@ -500,7 +500,7 @@ void CMoveGenerater::GNT_BPaoMove(int Map[10][9],CPoint pos,int nPly)
 
 	nChessID = Map[pos.x][pos.y];
 
-	x=pos.x;		//¸÷ÖÖ²»Í¬µÄÅĞ¶ÏÊµÔÚÊÇÌ«¶şÁË
+	x=pos.x;		//å„ç§ä¸åŒçš„åˆ¤æ–­å®åœ¨æ˜¯å¤ªäºŒäº†
 	y=pos.y+1;
 	flag=FALSE;
 	while(y < 9)		
@@ -561,7 +561,7 @@ void CMoveGenerater::GNT_BPaoMove(int Map[10][9],CPoint pos,int nPly)
 		x++;
 	}
 
-	x=pos.x-1;	//¤W
+	x=pos.x-1;	//î—½
 	flag=FALSE;	
 	while(x>=0)
 	{
