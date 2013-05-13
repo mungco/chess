@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "chess", "chess\chess.vcxproj", "{1E345596-AA29-4FC7-9A3D-11F57FCEAE9E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1E345596-AA29-4FC7-9A3D-11F57FCEAE9E}.Debug|Win32.ActiveCfg = Debug|Win32
+		{1E345596-AA29-4FC7-9A3D-11F57FCEAE9E}.Debug|Win32.Build.0 = Debug|Win32
+		{1E345596-AA29-4FC7-9A3D-11F57FCEAE9E}.Release|Win32.ActiveCfg = Release|Win32
+		{1E345596-AA29-4FC7-9A3D-11F57FCEAE9E}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
