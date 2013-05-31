@@ -1,14 +1,15 @@
 ﻿#pragma once
 #include "Evaluation.h"
 #include "MoveGenerater.h"
+#include "global.h"
 
 class CSearchEngine
 {
 public:
-	typedef CMoveGenerater::MoveStep CHESSMOVE;
+	typedef MoveStep CHESSMOVE;
 	CSearchEngine(void);
 	~CSearchEngine(void);
-	virtual void SearchAGoodMove(int Map[10][9])=0;
+	virtual CHESSMOVE SearchAGoodMove(int Map[10][9])=0;
 	virtual void SetSearchDepth(int nDepth){m_nSearchDepth=nDepth;}
 	virtual void SetEvaluator(CEvaluation *pEval){m_pEval=pEval;}
 	virtual void SetMoveGenerator(CMoveGenerater *pMG){m_pMG=pMG;}

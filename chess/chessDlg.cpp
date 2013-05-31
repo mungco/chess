@@ -68,6 +68,7 @@ BEGIN_MESSAGE_MAP(CchessDlg, CDialogEx)
 	ON_WM_LBUTTONDOWN()
 	ON_WM_LBUTTONUP()
 	ON_WM_MOUSEMOVE()
+	ON_BN_CLICKED(IDC_REGRET, &CchessDlg::OnBnClickedRegret)
 END_MESSAGE_MAP()
 
 
@@ -216,13 +217,30 @@ void CchessDlg::OnLButtonUp(UINT nFlags, CPoint point)
 	// TODO: 在此添加消息处理程序代码和/或调用默认值
 	int x=(point.y-BOARDERHEIGHT)/GRILLEHEIGHT;
 	int y=(point.x-BOARDERWIDTH)/GRILLEWIDTH;
+	MoveStep AiMove;
 	m_to.pos.x=x;
 	m_to.pos.y=y;
 	m_ChessBoard[m_from.pos.x][m_from.pos.y]=m_from.ChessID;
 	if(m_move.ChessID && m_to!=m_from && CMoveGenerater::IsValidMove(m_ChessBoard,m_from.pos,m_to.pos)){
-		m_ChessBoard[x][y]=m_move.ChessID;
-		m_pSE->SearchAGoodMove(m_ChessBoard);
 		m_ChessBoard[m_from.pos.x][m_from.pos.y]=NOCHESS;
+		int target=m_ChessBoard[x][y];
+		m_ChessBoard[x][y]=m_move.ChessID;
+		UpdateWindow();
+		regret.push(ChessNode(CPoint(x,y),target));
+		regret.push(ChessNode(CPoint(m_from.pos),m_move.ChessID));
+		AiMove=m_pSE->SearchAGoodMove(m_ChessBoard);
+		if(AiMove.from==AiMove.to){//do something
+			if(MessageBox(L"恭喜你，你赢了")==IDOK)
+				StartANewGame();
+		}
+		else{
+			AiMove.ChessID=m_ChessBoard[AiMove.to.x][AiMove.to.y];
+			target=m_ChessBoard[AiMove.from.x][AiMove.from.y];
+			regret.push(ChessNode(CPoint(AiMove.from),target));
+			m_ChessBoard[AiMove.from.x][AiMove.from.y]=NOCHESS;
+			m_ChessBoard[AiMove.to.x][AiMove.to.y]=target;
+			regret.push(ChessNode(CPoint(AiMove.to),AiMove.ChessID));
+		}
 	}
 	else
 		m_ChessBoard[m_from.pos.x][m_from.pos.y]=m_from.ChessID;		
@@ -252,4 +270,28 @@ void CchessDlg::OnMouseMove(UINT nFlags, CPoint point)
 		UpdateWindow();
 	}
 	CDialogEx::OnMouseMove(nFlags, point);
+}
+
+
+void CchessDlg::OnBnClickedRegret()
+{
+	// TODO: 在此添加控件通知处理程序代码
+	if(regret.size()<4)
+		return;
+	for(int i=0 ;i<4 ; i++){
+		ChessNode temp=regret.top();
+		m_ChessBoard[temp.pos.x][temp.pos.y]=temp.ChessID;
+		regret.pop();
+	}
+	InvalidateRect(NULL,FALSE);
+	UpdateWindow();
+}
+
+void CchessDlg::StartANewGame()
+{
+	memcpy(m_ChessBoard,InitChessBoard,90*sizeof(int));
+	while(!regret.empty())
+		regret.pop();
+	InvalidateRect(NULL,FALSE);
+	UpdateWindow();
 }

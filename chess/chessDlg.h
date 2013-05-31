@@ -7,6 +7,10 @@
 #include "MoveGenerater.h"
 #include "SearchEngine.h"
 #include "Evaluation.h"
+#include <stack>
+
+using namespace std;
+
 // CchessDlg 对话框
 class CchessDlg : public CDialogEx
 {
@@ -39,6 +43,8 @@ protected:
 	CSearchEngine *m_pSE;
 	CMoveGenerater *m_pMG;
 	CEvaluation *m_pEva;
+	stack<ChessNode> regret;
+	void StartANewGame();
 	// 生成的消息映射函数
 	virtual BOOL OnInitDialog();
 	afx_msg void OnSysCommand(UINT nID, LPARAM lParam);
@@ -49,4 +55,5 @@ public:
 	afx_msg void OnLButtonDown(UINT nFlags, CPoint point);
 	afx_msg void OnLButtonUp(UINT nFlags, CPoint point);
 	afx_msg void OnMouseMove(UINT nFlags, CPoint point);
+	afx_msg void OnBnClickedRegret();
 };

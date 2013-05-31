@@ -4,7 +4,7 @@
 
 CMoveGenerater::CMoveGenerater(void)
 {
-	MoveList=vector<vector<MoveStep> >(8);
+	m_nMoveCount=0;
 }
 
 
@@ -13,14 +13,13 @@ CMoveGenerater::~CMoveGenerater(void)
 
 }
 
-int CMoveGenerater::AddMove(CPoint from,CPoint to,int ply)
+inline void CMoveGenerater::AddMove(MoveStep p,int nPly)
 {
-	MoveList[ply].push_back(MoveStep(from,to));
+	MoveList[nPly][m_nMoveCount]=p;
 	m_nMoveCount++;
-	return MoveList[ply].size();
 }
 
-bool CMoveGenerater::IsValidMove(int Map[10][9] , CPoint from, CPoint to ){
+bool CMoveGenerater::IsValidMove(int Map[10][9] , const CPoint &from, const CPoint &to ){
 	int i, j;
 	int nMoveChessID, nTargetID;
 
@@ -183,23 +182,23 @@ bool CMoveGenerater::IsValidMove(int Map[10][9] , CPoint from, CPoint to ){
 
 		if(to.y-from.y==2)
 		{
-			i=from.y+1;
-			j=from.x;
+			i=from.x;
+			j=from.y+1;
 		}
 		else if	(from.y-to.y==2)
 		{
-			i=from.y-1;
-			j=from.x;
+			i=from.x;
+			j=from.y-1;
 		}
 		else if	(to.x-from.x==2)
 		{
-			i=from.y;
-			j=from.x+1;
+			i=from.x+1;
+			j=from.y;
 		}
 		else if	(from.x-to.x==2)
 		{
-			i=from.y;
-			j=from.x-1;
+			i=from.x-1;
+			j=from.y;
 		}
 
 		if(Map[i][j] != NOCHESS)
@@ -303,7 +302,7 @@ int CMoveGenerater::AllValidMove(int Map[10][9],int nPly,int nSide)
 	int     nChessID;
 	int		i,j;
 
-	m_nMoveCount = 0;
+	m_nMoveCount=0;
 	for (i = 0; i < 10; i++)
 		for (j = 0; j < 9; j++)
 		{
@@ -366,25 +365,25 @@ int CMoveGenerater::AllValidMove(int Map[10][9],int nPly,int nSide)
 		return m_nMoveCount;
 }
 
-void CMoveGenerater::GNT_JiangMove(int Map[10][9],CPoint pos,int nPly)
+void CMoveGenerater::GNT_JiangMove(int Map[10][9],CPoint &pos,int nPly)
 {
 	int x,y;
 	for(x=0 ; x<3 ; x++)
 		for(y=3 ; y<6 ; y++)
 			if(IsValidMove(Map,pos,CPoint(x,y)))
-				AddMove(pos,CPoint(x,y),nPly);
+				AddMove(MoveStep(pos,CPoint(x, y)),nPly);
 }
 
-void CMoveGenerater::GNT_ShuaiMove(int Map[10][9],CPoint pos,int nPly)
+void CMoveGenerater::GNT_ShuaiMove(int Map[10][9],CPoint &pos,int nPly)
 {
 	int x, y;
 	for(x=7 ; x<10 ; x++)
 		for(y=3 ; y<6 ; y++)
 			if(IsValidMove(Map,pos,CPoint(x,y)))
-				AddMove(pos,CPoint(x,y),nPly);
+				AddMove(MoveStep(pos,CPoint(x, y)),nPly);
 }
 
-void CMoveGenerater::GNT_BJuMove(int Map[10][9],CPoint pos,int nPly)
+void CMoveGenerater::GNT_BJuMove(int Map[10][9],CPoint &pos,int nPly)
 {
 	int x,  y;
 	int nChessID;
@@ -396,11 +395,11 @@ void CMoveGenerater::GNT_BJuMove(int Map[10][9],CPoint pos,int nPly)
 	while(y < 9)
 	{
 		if( NOCHESS == Map[x][y] )
-			AddMove(pos,CPoint(x, y),nPly);
+			AddMove(MoveStep(pos,CPoint(x, y)),nPly);
 		else
 		{
 			if(!IsSameSide(nChessID, Map[x][y]))
-				AddMove(pos,CPoint(x,y),nPly);
+				AddMove(MoveStep(pos,CPoint(x, y)),nPly);
 			break;
 		}
 		y++;
@@ -411,11 +410,11 @@ void CMoveGenerater::GNT_BJuMove(int Map[10][9],CPoint pos,int nPly)
 	while(y >= 0)
 	{
 		if( NOCHESS == Map[x][y] )
-			AddMove(pos, CPoint(x, y), nPly);
+			AddMove(MoveStep(pos,CPoint(x, y)),nPly);
 		else
 		{
 			if(!IsSameSide(nChessID, Map[x][y]))
-				AddMove(pos,CPoint( x, y), nPly);
+				AddMove(MoveStep(pos,CPoint(x, y)),nPly);
 			break;
 		}
 		y--;
@@ -426,11 +425,11 @@ void CMoveGenerater::GNT_BJuMove(int Map[10][9],CPoint pos,int nPly)
 	while(x < 10)
 	{
 		if( NOCHESS == Map[x][y])
-			AddMove(pos, CPoint(x, y), nPly);
+			AddMove(MoveStep(pos,CPoint(x, y)),nPly);
 		else
 		{
 			if(!IsSameSide(nChessID, Map[x][y]))
-				AddMove(pos, CPoint(x, y), nPly);
+				AddMove(MoveStep(pos,CPoint(x, y)),nPly);
 			break;
 		}
 		x++;
@@ -440,59 +439,59 @@ void CMoveGenerater::GNT_BJuMove(int Map[10][9],CPoint pos,int nPly)
 	y = pos.y;//
 	while(x>=0)	{
 		if( NOCHESS == Map[x][y])
-			AddMove(pos, CPoint(x, y), nPly);
+			AddMove(MoveStep(pos,CPoint(x, y)),nPly);
 		else {
 			if(!IsSameSide(nChessID, Map[x][y]))
-				AddMove(pos, CPoint(x, y), nPly);
+				AddMove(MoveStep(pos,CPoint(x, y)),nPly);
 			break;
 		}
 		x--;
 	}
 }
 
-void CMoveGenerater::GNT_BMaMove(int Map[10][9],CPoint pos,int nPly)
+void CMoveGenerater::GNT_BMaMove(int Map[10][9],CPoint &pos,int nPly)
 {
 	int x,  y;
 
 	x=pos.x+1;
 	y=pos.y+2;
-	if((x < 9 && y < 10) &&IsValidMove(Map, pos, CPoint(x, y)))
-		AddMove(pos , CPoint(x,y), nPly);
+	if((x < 10 && y < 9) &&IsValidMove(Map, pos, CPoint(x, y)))
+		AddMove(MoveStep(pos,CPoint(x, y)),nPly);
 
 	x=pos.x-1;
 	y=pos.y+2;
 	if((y < 9 && x >= 0) &&IsValidMove(Map, pos, CPoint(x, y)))
-		AddMove(pos, CPoint(x, y), nPly);
+		AddMove(MoveStep(pos,CPoint(x, y)),nPly);
 
 	x=pos.x+1;
 	y=pos.y-2;
 	if((y >= 0 && x < 10) &&IsValidMove(Map, pos, CPoint(x, y)))
-		AddMove(pos, CPoint(x, y), nPly);
+		AddMove(MoveStep(pos,CPoint(x, y)),nPly);
 
 	x=pos.x-1;
 	y=pos.y-2;
 	if((x >= 0 && y >= 0) &&IsValidMove(Map, pos, CPoint(x, y)))
-		AddMove(pos, CPoint(x, y), nPly);
+		AddMove(MoveStep(pos,CPoint(x, y)),nPly);
 
 	x=pos.x+2;
 	y=pos.y+1;
-	if((x < 9 && y < 10) &&IsValidMove(Map, pos, CPoint(x, y)))
-		AddMove(pos, CPoint(x, y), nPly);
+	if((x < 10 && y < 9) &&IsValidMove(Map, pos, CPoint(x, y)))
+		AddMove(MoveStep(pos,CPoint(x, y)),nPly);
 	x=pos.x+2;
 	y=pos.y-1;
 	if((y >= 0 && x < 10) &&IsValidMove(Map, pos, CPoint(x, y)))
-		AddMove(pos, CPoint(x, y), nPly);
+		AddMove(MoveStep(pos,CPoint(x, y)),nPly);
 	x=pos.x-2;
 	y=pos.y+1;
 	if((y < 9 && x >= 0) &&IsValidMove(Map, pos, CPoint(x, y)))
-		AddMove(pos, CPoint(x, y), nPly);
+		AddMove(MoveStep(pos,CPoint(x, y)),nPly);
 	x=pos.x-2;
 	y=pos.y-1;
 	if((x >= 0 && y >= 0) &&IsValidMove(Map,pos, CPoint(x, y)))
-		AddMove(pos, CPoint(x, y), nPly);
+		AddMove(MoveStep(pos,CPoint(x, y)),nPly);
 }
 
-void CMoveGenerater::GNT_BPaoMove(int Map[10][9],CPoint pos,int nPly)
+void CMoveGenerater::GNT_BPaoMove(int Map[10][9],CPoint &pos,int nPly)
 {
 	int x, y;
 	BOOL	flag;
@@ -507,14 +506,14 @@ void CMoveGenerater::GNT_BPaoMove(int Map[10][9],CPoint pos,int nPly)
 	{
 		if( NOCHESS == Map[x][y] ){
 			if(!flag)
-				AddMove(pos, CPoint(x, y), nPly);
+				AddMove(MoveStep(pos,CPoint(x, y)),nPly);
 		}
 		else{
 			if(!flag)
 				flag=TRUE;
 			else {
 				if(!IsSameSide(nChessID, Map[x][y]))
-					AddMove(pos, CPoint(x, y), nPly);
+					AddMove(MoveStep(pos,CPoint(x, y)),nPly);
 				break;
 			}
 		}
@@ -527,14 +526,14 @@ void CMoveGenerater::GNT_BPaoMove(int Map[10][9],CPoint pos,int nPly)
 	{
 		if( NOCHESS == Map[x][y] ){
 			if(!flag)
-				AddMove(pos, CPoint(x, y), nPly);
+				AddMove(MoveStep(pos,CPoint(x, y)),nPly);
 		}
 		else{
 			if(!flag)
 				flag=TRUE;
 			else {
 				if(!IsSameSide(nChessID, Map[y][x]))
-					AddMove(pos, CPoint(x, y), nPly);
+					AddMove(MoveStep(pos,CPoint(x, y)),nPly);
 				break;
 			}
 		}
@@ -547,34 +546,34 @@ void CMoveGenerater::GNT_BPaoMove(int Map[10][9],CPoint pos,int nPly)
 	{
 		if( NOCHESS == Map[x][y] ){
 			if(!flag)
-				AddMove(pos, CPoint(x, y), nPly);
+				AddMove(MoveStep(pos,CPoint(x, y)),nPly);
 		}
 		else {
 			if(!flag)
 				flag=TRUE;
 			else {
 				if(!IsSameSide(nChessID, Map[x][y]))
-					AddMove(pos, CPoint(x, y), nPly);
+					AddMove(MoveStep(pos,CPoint(x, y)),nPly);
 				break;
 			}
 		}
 		x++;
 	}
 
-	x=pos.x-1;	//
+	x=pos.x-1;	//
 	flag=FALSE;	
 	while(x>=0)
 	{
 		if( NOCHESS == Map[x][y] ) {
 			if(!flag)
-				AddMove(pos, CPoint(x, y), nPly);
+				AddMove(MoveStep(pos,CPoint(x, y)),nPly);
 		}
 		else {
 			if(!flag)
 				flag=TRUE;
 			else {
 				if(!IsSameSide(nChessID, Map[x][y]))
-					AddMove(pos, CPoint(x, y), nPly);
+					AddMove(MoveStep(pos,CPoint(x, y)),nPly);
 				break;
 			}
 		}
@@ -583,50 +582,50 @@ void CMoveGenerater::GNT_BPaoMove(int Map[10][9],CPoint pos,int nPly)
 
 }
 
-void CMoveGenerater::GNT_BXiangMove(int Map[10][9] , CPoint pos , int nPly)
+void CMoveGenerater::GNT_BXiangMove(int Map[10][9] , CPoint &pos , int nPly)
 {
 	int x,  y;
 
 	x=pos.x+2;
 	y=pos.y+2;
 	if(y < 9 && x < 10  && IsValidMove(Map, pos, CPoint(x, y)))
-		AddMove(pos, CPoint(x, y), nPly);
+		AddMove(MoveStep(pos,CPoint(x, y)),nPly);
 
 	x=pos.x-2;
 	y=pos.y+2;
 	if(y < 9 && x>=0  &&  IsValidMove(Map, pos, CPoint(x, y)))
-		AddMove(pos, CPoint(x, y), nPly);
+		AddMove(MoveStep(pos,CPoint(x, y)),nPly);
 
 	x=pos.x+2;
-	y=pos.x-2;
+	y=pos.y-2;
 	if(y>=0 && x < 10  && IsValidMove(Map, pos, CPoint(x, y)))
-		AddMove(pos, CPoint(x, y), nPly);
+		AddMove(MoveStep(pos,CPoint(x, y)),nPly);
 
 	x=pos.x-2;
 	y=pos.y-2;
 	if(x>=0 && y>=0  && IsValidMove(Map, pos, CPoint(x, y)))
-		AddMove(pos, CPoint(x, y), nPly);
+		AddMove(MoveStep(pos,CPoint(x, y)),nPly);
 }
 
-void CMoveGenerater::GNT_BShiMove(int Map[10][9],CPoint pos,int nPly)
+void CMoveGenerater::GNT_BShiMove(int Map[10][9],CPoint &pos,int nPly)
 {
 	int x,  y;
 	for (x = 0; x < 3; x++)
 		for (y = 3; y < 6; y++)
 			if (IsValidMove(Map,  pos, CPoint(x, y)))
-				AddMove( pos, CPoint(x, y), nPly);
+				AddMove(MoveStep(pos,CPoint(x, y)),nPly);
 }
 
-void CMoveGenerater::GNT_RShiMove(int Map[10][9],CPoint pos , int nPly)
+void CMoveGenerater::GNT_RShiMove(int Map[10][9],CPoint &pos , int nPly)
 {
 	int x,  y;
 	for (x = 7; x < 10; x++)
 		for (y = 3; y < 6; y++)
 			if (IsValidMove(Map,  pos, CPoint(x, y)))
-				AddMove( pos, CPoint(x, y), nPly);
+				AddMove(MoveStep(pos,CPoint(x, y)),nPly);
 }
 
-void CMoveGenerater::GNT_BZuMove(int Map[10][9],CPoint pos , int nPly)
+void CMoveGenerater::GNT_BZuMove(int Map[10][9],CPoint &pos , int nPly)
 {
 	int x, y;
 	int nChessID;
@@ -637,21 +636,20 @@ void CMoveGenerater::GNT_BZuMove(int Map[10][9],CPoint pos , int nPly)
 	y = pos.y;
 
 	if(x < 10 && !IsSameSide(nChessID, Map[x][y]))
-		AddMove(pos, CPoint(x, y), nPly);
-
+		AddMove(MoveStep(pos,CPoint(x, y)),nPly);
+	x=pos.x;
 	if( x > 4)
 	{
 		y = pos.y+1;
-		x = pos.x;
 		if(y < 9 && !IsSameSide(nChessID, Map[x][y]))
-			AddMove(pos, CPoint(x, y), nPly);
+			AddMove(MoveStep(pos,CPoint(x, y)),nPly);
 		y=pos.y-1;
 		if(y >= 0 && !IsSameSide(nChessID, Map[x][y]))
-			AddMove(pos, CPoint(x, y), nPly);
+			AddMove(MoveStep(pos,CPoint(x, y)),nPly);
 	}
 }
 
-void CMoveGenerater::GNT_RBingMove(int Map[10][9],CPoint pos , int nPly)
+void CMoveGenerater::GNT_RBingMove(int Map[10][9],CPoint &pos , int nPly)
 {
 	int x, y;
 	int nChessID;
@@ -660,18 +658,16 @@ void CMoveGenerater::GNT_RBingMove(int Map[10][9],CPoint pos , int nPly)
 
 	x = pos.x -1;
 	y = pos.y;
-
 	if( x>0 && !IsSameSide(nChessID, Map[x][y]))
-		AddMove(pos, CPoint(x, y), nPly);
-
+		AddMove(MoveStep(pos,CPoint(x, y)),nPly);
+	x = pos.x;
 	if( x <5 )
 	{
 		y = pos.y+1;
-		x = pos.x;
 		if(y < 9 && !IsSameSide(nChessID, Map[x][y]))
-			AddMove(pos, CPoint(x, y), nPly);
+			AddMove(MoveStep(pos,CPoint(x, y)),nPly);
 		y=pos.y-1;
 		if(y >= 0 && !IsSameSide(nChessID, Map[x][y]))
-			AddMove(pos, CPoint(x, y), nPly);
+			AddMove(MoveStep(pos,CPoint(x, y)),nPly);
 	}
 }

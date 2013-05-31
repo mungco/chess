@@ -51,3 +51,10 @@ const int InitChessBoard[10][9]=
 #define NBOARDHEIGHT 521
 
 #define MaxInt 2147483647
+
+struct MoveStep{
+	CPoint from;
+	CPoint to;
+	int ChessID;
+	MoveStep(CPoint nfrom=CPoint(0,0),CPoint nto=CPoint(0,0),int nChessID=0):from(nfrom),to(nto),ChessID(nChessID){}
+};
